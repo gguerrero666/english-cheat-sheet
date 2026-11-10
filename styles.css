@@ -2,20 +2,17 @@
    Meeting English cheat sheets - shared stylesheet
    Link it from any sheet:  <link rel="stylesheet" href="styles.css">
 
-   Body modifiers (optional):
-     .compact  smaller type, used by the dense one-page sheets
-     .dense    even smaller print size (used with .compact)
-   Grid modifier:
-     .grid.cols-3  three-column grid (default grid has two columns)
+   One visual language for every sheet:
+     - same page, header and footer
+     - same card (section / .t / .c) with a numbered badge title
+     - same list rows (dotted separators), English in ink, Spanish in orange
+
+   Optional modifiers:
+     body.compact / body.dense   smaller type for the one-page consolidated sheet
+     .grid.cols-3                three-column grid (default grid has two)
 
    Sections:
-     1. Base (tokens, page, header, footer)
-     2. Grid + generic cards        (general sheet)
-     3. Tense cards  (.t)           (tenses sheets)
-     4. Vocabulary cards (.c)       (vocabulary sheet)
-     5. Compact overrides for .t    (consolidated tenses sheet)
-     6. Responsive
-     7. Print
+     1. Base   2. Cards   3. Card content   4. Compact   5. Responsive   6. Print
    ========================================================================== */
 
 /* 1. Base ---------------------------------------------------------------- */
@@ -29,46 +26,56 @@
   --line: #d5dbe3;
   --bg: #fff;
   --card: #f5f8fc;
+  --gap: 7px;
 }
 * { box-sizing: border-box; }
 
 body {
   margin: 0; padding: 16px;
   background: #e9edf2; color: var(--ink);
-  font: 14px/1.38 "Segoe UI", Calibri, Arial, sans-serif;
+  font: 13px/1.38 "Segoe UI", Calibri, Arial, sans-serif;
 }
-body.compact { font-size: 13px; line-height: 1.35; }
 
 .sheet { max-width: 210mm; margin: 0 auto; background: var(--bg); padding: 10mm; box-shadow: 0 2px 12px #0002; }
 
 header { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 3px solid var(--accent); padding-bottom: 4px; margin-bottom: 8px; }
 h1 { margin: 0; font-size: 21px; color: var(--accent); }
 header span { color: var(--muted); font-size: 12px; }
-.compact h1 { font-size: 20px; }
-.compact header span { font-size: 11px; }
 
-footer { margin-top: 2px; text-align: center; font-size: 11px; color: var(--muted); }
-.compact footer { margin-top: 6px; font-size: 10px; }
+footer { margin-top: 6px; text-align: center; font-size: 11px; color: var(--muted); }
 
-/* 2. Grid + generic cards ------------------------------------------------ */
-.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
-.grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap); }
+.grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
 .wide { grid-column: span 2; }
 
-section { background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 6px 9px; break-inside: avoid; }
-section h2 { margin: 0 0 3px; font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--accent); }
+/* 2. Cards: section (general), .t (tenses), .c (vocabulary) -------------- */
+section, .t, .c {
+  background: var(--card); border: 1px solid var(--line); border-radius: 6px;
+  padding: 5px 10px; margin-bottom: var(--gap); break-inside: avoid;
+}
+.grid > section, .grid > .c { margin-bottom: 0; }
+
+section h2, .t h2, .c h2 {
+  margin: 0 0 3px; font-size: 14px; color: var(--accent);
+  display: flex; gap: 7px; align-items: baseline;
+}
+h2 small { color: var(--es); font-weight: 600; font-size: 12px; }
+.n {
+  background: var(--accent); color: #fff; border-radius: 50%;
+  width: 19px; height: 19px; font-size: 12px; flex: none;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+
+/* 3. Card content -------------------------------------------------------- */
+/* simple lists (general sheet) */
 section ul { margin: 0; padding: 0; list-style: none; }
 section li { padding: 1.5px 0; border-bottom: 1px dotted var(--line); }
 section li:last-child { border-bottom: 0; }
 section.wide ul { columns: 2; column-gap: 14px; }
 section.wide li { break-inside: avoid; }
-em { color: var(--muted); font-style: normal; font-size: 11px; }
+em { color: var(--muted); font-style: normal; font-size: 11.5px; }
 
-/* 3. Tense cards (.t) ---------------------------------------------------- */
-.t { background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 5px 10px; margin-bottom: 6px; break-inside: avoid; }
-.t h2 { margin: 0 0 3px; font-size: 15px; color: var(--accent); display: flex; gap: 7px; align-items: baseline; }
-.t h2 small { color: var(--es); font-weight: 600; font-size: 12.5px; }
-.n { background: var(--accent); color: #fff; border-radius: 50%; width: 19px; height: 19px; font-size: 12px; display: inline-flex; align-items: center; justify-content: center; flex: none; }
+/* tense cards */
 .cols { display: grid; grid-template-columns: 1fr 1.15fr; gap: 12px; }
 .use { font-size: 12.5px; margin-bottom: 2px; }
 .use .es, .ex .es { color: var(--es); }
@@ -77,71 +84,64 @@ em { color: var(--muted); font-style: normal; font-size: 11px; }
 code { font-family: Consolas, monospace; font-size: 12px; }
 .sig { font-size: 12px; color: var(--muted); margin-top: 2px; }
 .sig b { color: var(--ink); }
-.ex { padding: 1.5px 0; border-top: 1px dotted var(--line); font-size: 13px; }
+.ex { padding: 1.5px 0; border-top: 1px dotted var(--line); }
 .ex:first-child { border-top: 0; }
 .ex .es { display: block; font-size: 12px; }
 .tip { margin-top: 3px; font-size: 12px; background: #fff7e6; border-left: 3px solid #e0a030; padding: 2px 6px; }
 
-/* 4. Vocabulary cards (.c) ----------------------------------------------- */
-.c { background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 5px 10px; break-inside: avoid; }
-.c h2 { margin: 0 0 3px; font-size: 13px; text-transform: uppercase; letter-spacing: .05em; color: var(--accent); }
+/* vocabulary tables */
 table { width: 100%; border-collapse: collapse; }
-td { padding: 2px 0; border-bottom: 1px dotted var(--line); vertical-align: top; font-size: 13px; }
+td { padding: 1.5px 0; border-bottom: 1px dotted var(--line); vertical-align: top; }
 tr:last-child td { border-bottom: 0; }
 td.en { font-weight: 700; width: 34%; padding-right: 6px; }
 td.es { color: var(--es); width: 30%; padding-right: 6px; }
 td.m { color: var(--muted); font-size: 11.5px; }
 .c.wide td.en { width: 30%; }
 .c.wide td.es { width: 34%; }
-.two { display: grid; grid-template-columns: 1fr 1fr; column-gap: 18px; }
-.abbr { display: grid; grid-template-columns: 1fr 1fr; column-gap: 18px; }
-.abbr div { padding: 2px 0; border-bottom: 1px dotted var(--line); font-size: 13px; }
+.two, .abbr { display: grid; grid-template-columns: 1fr 1fr; column-gap: 18px; }
+.abbr div { padding: 1.5px 0; border-bottom: 1px dotted var(--line); }
 .abbr b { display: inline-block; width: 58px; }
 .abbr .es { color: var(--es); }
 
-/* 5. Compact overrides for .t (consolidated tenses sheet) ---------------- */
-.compact .t { padding: 5px 9px; margin-bottom: 0; }
+/* 4. Compact (consolidated tenses sheet) --------------------------------- */
+.compact .t { margin-bottom: 0; padding: 5px 9px; }
 .compact .t h2 { margin: 0; font-size: 12.5px; gap: 6px; }
 .compact .t h2 small { font-size: 11px; }
 .compact .n { width: 16px; height: 16px; font-size: 10px; }
 .compact .use { color: var(--muted); font-size: 11px; margin: 1px 0 2px; }
 .compact .form { font-family: Consolas, monospace; font-size: 11px; background: #fff; border: 1px solid var(--line); border-radius: 4px; padding: 1px 5px; margin-bottom: 2px; }
 .compact .sig { font-size: 10.5px; margin-top: 1px; }
-.compact .ex { font-size: 1em; }
 .compact .ex .es { font-size: 11px; }
 
-/* 6. Responsive ---------------------------------------------------------- */
+/* 5. Responsive ---------------------------------------------------------- */
 @media (max-width: 700px) {
   .grid, .grid.cols-3, .cols, .abbr { grid-template-columns: 1fr; }
   .wide { grid-column: auto; }
   section.wide ul { columns: 1; }
 }
 
-/* 7. Print --------------------------------------------------------------- */
+/* 6. Print --------------------------------------------------------------- */
 @media print {
   * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  body { background: #fff; padding: 0; font-size: 11.5px; }
+  :root { --gap: 5px; }
+  body { background: #fff; padding: 0; font-size: 11px; }
   body.compact { font-size: 10.5px; }
   body.dense { font-size: 10px; }
   .sheet { box-shadow: none; padding: 0; max-width: none; }
   h1 { font-size: 18px; }
-  .compact h1 { font-size: 17px; }
+  header { margin-bottom: 6px; }
 
-  section { background: #fff; padding: 4px 7px; }
-
-  .t { background: #fff; padding: 3px 8px; margin-bottom: 5px; }
-  .t h2 { font-size: 13px; }
-  .t h2 small { font-size: 11px; }
-  .use, .form, .ex { font-size: 11px; }
-  .ex .es, .sig, .tip { font-size: 10.5px; }
+  section, .t, .c { background: #fff; padding: 3px 8px; }
+  section h2, .t h2, .c h2 { font-size: 12.5px; margin-bottom: 2px; }
+  h2 small { font-size: 10.5px; }
+  .use, .form { font-size: 10.5px; }
+  .ex .es, .sig, .tip, td.m, em { font-size: 10px; }
   code { font-size: 10.5px; }
-  .compact .t { padding: 3px 7px; margin-bottom: 0; }
-
-  .c { background: #fff; padding: 3px 8px; }
-  .c h2 { font-size: 11.5px; }
-  td, .abbr div { font-size: 10.5px; line-height: 1.25; }
-  td { padding: 1px 0; }
-  .abbr div { padding: 1px 0; }
-  td.m { font-size: 9.5px; }
-  .grid:has(.c) { gap: 5px; }
+  td, .abbr div { line-height: 1.25; padding: 1px 0; }
+  .compact .t { padding: 3px 7px; }
+  .compact .t h2 { font-size: 12.5px; }
+  .compact .t h2 small { font-size: 11px; }
+  .compact .use, .compact .form { font-size: 11px; }
+  .compact .ex .es { font-size: 11px; }
+  .compact .sig { font-size: 10.5px; }
 }
