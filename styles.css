@@ -103,6 +103,15 @@ td.m { color: var(--muted); font-size: 11.5px; }
 .abbr b { display: inline-block; width: 58px; }
 .abbr .es { color: var(--es); }
 
+/* index links */
+a { color: var(--accent); }
+a.open { display: inline-block; margin-top: 4px; font-weight: 600; text-decoration: none; }
+a.open:hover { text-decoration: underline; }
+
+nav.back { margin: -4px 0 6px; font-size: 12px; font-weight: 600; }
+nav.back a { text-decoration: none; }
+nav.back a:hover { text-decoration: underline; }
+
 /* 4. Compact (consolidated tenses sheet) --------------------------------- */
 .compact .t { margin-bottom: 0; padding: 5px 9px; }
 .compact .t h2 { margin: 0; font-size: 12.5px; gap: 6px; }
@@ -128,6 +137,7 @@ td.m { color: var(--muted); font-size: 11.5px; }
   body.compact { font-size: 10.5px; }
   body.dense { font-size: 10px; }
   .sheet { box-shadow: none; padding: 0; max-width: none; }
+  nav.back { display: none; }
   h1 { font-size: 18px; }
   header { margin-bottom: 6px; }
 
