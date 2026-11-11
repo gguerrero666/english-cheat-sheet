@@ -156,8 +156,9 @@ nav.back a:hover { text-decoration: underline; }
   body { background: #fff; padding: 0; font-size: 11px; }
   body.compact { font-size: 10.5px; }
   body.dense { font-size: 10px; }
-  .sheet { box-shadow: none; padding: 0; max-width: none; }
-  nav.back, .theme-switch { display: none; }
+  /* --print-zoom is set per sheet on <body> so the content fills the A4 page */
+  .sheet { box-shadow: none; padding: 0; max-width: none; zoom: var(--print-zoom, 1); }
+  nav.back, footer { display: none; }
   h1 { font-size: 18px; }
   header { margin-bottom: 6px; }
 
@@ -235,3 +236,5 @@ nav.back a:hover { text-decoration: underline; }
   background: var(--bg); border: 1px solid var(--line); border-radius: 999px; padding: 2px 8px;
 }
 .theme-switch select { font: inherit; color: var(--ink); background: transparent; border: 0; cursor: pointer; }
+/* must come after the .theme-switch rule above: same specificity, so order decides */
+@media print { .theme-switch { display: none; } }
