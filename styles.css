@@ -27,19 +27,36 @@
   --bg: #fff;
   --card: #f5f8fc;
   --gap: 7px;
+
+  /* theme tokens (the values below are the "classic" theme; see section 7) */
+  --page-bg: #e9edf2;
+  --sheet-shadow: 0 2px 12px #0002;
+  --font: "Segoe UI", Calibri, Arial, sans-serif;
+  --font-title: var(--font);
+  --radius: 6px;
+  --badge-radius: 50%;
+  --head-line: 3px solid var(--accent);
+  --h1-color: var(--accent);
+  --title-case: none;
+  --title-track: normal;
+  --bar-w: 0px;
+  --bar-color: transparent;
+  --tip-bg: #fff7e6;
+  --tip-bar: #e0a030;
+  --code-bg: #fff;
 }
 * { box-sizing: border-box; }
 
 body {
   margin: 0; padding: 16px;
-  background: #e9edf2; color: var(--ink);
-  font: 13px/1.38 "Segoe UI", Calibri, Arial, sans-serif;
+  background: var(--page-bg); color: var(--ink);
+  font: 13px/1.38 var(--font);
 }
 
-.sheet { max-width: 210mm; margin: 0 auto; background: var(--bg); padding: 10mm; box-shadow: 0 2px 12px #0002; }
+.sheet { max-width: 210mm; margin: 0 auto; background: var(--bg); padding: 10mm; box-shadow: var(--sheet-shadow); }
 
-header { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 3px solid var(--accent); padding-bottom: 4px; margin-bottom: 8px; }
-h1 { margin: 0; font-size: 21px; color: var(--accent); }
+header { display: flex; justify-content: space-between; align-items: baseline; border-bottom: var(--head-line); padding-bottom: 4px; margin-bottom: 8px; }
+h1 { margin: 0; font-size: 21px; color: var(--h1-color); font-family: var(--font-title); }
 header span { color: var(--muted); font-size: 12px; }
 
 footer { margin-top: 6px; text-align: center; font-size: 11px; color: var(--muted); }
@@ -50,18 +67,21 @@ footer { margin-top: 6px; text-align: center; font-size: 11px; color: var(--mute
 
 /* 2. Cards: section (general), .t (tenses), .c (vocabulary) -------------- */
 section, .t, .c {
-  background: var(--card); border: 1px solid var(--line); border-radius: 6px;
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+  box-shadow: inset var(--bar-w) 0 0 var(--bar-color);
   padding: 5px 10px; margin-bottom: var(--gap); break-inside: avoid;
 }
 .grid > section, .grid > .c { margin-bottom: 0; }
 
 section h2, .t h2, .c h2 {
   margin: 0 0 3px; font-size: 14px; color: var(--accent);
+  text-transform: var(--title-case); letter-spacing: var(--title-track);
+  font-family: var(--font-title);
   display: flex; gap: 7px; align-items: baseline;
 }
-h2 small { color: var(--es); font-weight: 600; font-size: 12px; }
+h2 small { color: var(--es); font-weight: 600; font-size: 12px; font-family: var(--font); letter-spacing: 0; text-transform: none; }
 .n {
-  background: var(--accent); color: #fff; border-radius: 50%;
+  background: var(--accent); color: #fff; border-radius: var(--badge-radius);
   width: 19px; height: 19px; font-size: 12px; flex: none;
   display: inline-flex; align-items: center; justify-content: center;
 }
@@ -87,7 +107,7 @@ code { font-family: Consolas, monospace; font-size: 12px; }
 .ex { padding: 1.5px 0; border-top: 1px dotted var(--line); }
 .ex:first-child { border-top: 0; }
 .ex .es { display: block; font-size: 12px; }
-.tip { margin-top: 3px; font-size: 12px; background: #fff7e6; border-left: 3px solid #e0a030; padding: 2px 6px; }
+.tip { margin-top: 3px; font-size: 12px; background: var(--tip-bg); border-left: 3px solid var(--tip-bar); padding: 2px 6px; }
 
 /* vocabulary tables */
 table { width: 100%; border-collapse: collapse; }
@@ -118,7 +138,7 @@ nav.back a:hover { text-decoration: underline; }
 .compact .t h2 small { font-size: 11px; }
 .compact .n { width: 16px; height: 16px; font-size: 10px; }
 .compact .use { color: var(--muted); font-size: 11px; margin: 1px 0 2px; }
-.compact .form { font-family: Consolas, monospace; font-size: 11px; background: #fff; border: 1px solid var(--line); border-radius: 4px; padding: 1px 5px; margin-bottom: 2px; }
+.compact .form { font-family: Consolas, monospace; font-size: 11px; background: var(--code-bg); border: 1px solid var(--line); border-radius: 4px; padding: 1px 5px; margin-bottom: 2px; }
 .compact .sig { font-size: 10.5px; margin-top: 1px; }
 .compact .ex .es { font-size: 11px; }
 
@@ -137,7 +157,7 @@ nav.back a:hover { text-decoration: underline; }
   body.compact { font-size: 10.5px; }
   body.dense { font-size: 10px; }
   .sheet { box-shadow: none; padding: 0; max-width: none; }
-  nav.back { display: none; }
+  nav.back, .theme-switch { display: none; }
   h1 { font-size: 18px; }
   header { margin-bottom: 6px; }
 
@@ -155,3 +175,63 @@ nav.back a:hover { text-decoration: underline; }
   .compact .ex .es { font-size: 11px; }
   .compact .sig { font-size: 10.5px; }
 }
+
+/* 7. Themes -------------------------------------------------------------- */
+/* "classic" is the default: it uses the tokens declared in :root above.
+   Other themes only override tokens (plus a few rules). To add one:
+     1. add { id, label } to THEMES in theme.js
+     2. add a  :root[data-theme="your-id"] { ... }  block below              */
+
+/* "modern": corporate. Grey/black base, one navy accent, serif titles,
+   sober light boxes, plain numbers, muted burgundy for the Spanish text. */
+:root[data-theme="modern"] {
+  --ink: #1a1a1a;
+  --muted: #5f6368;
+  --accent: #1e3a5f;
+  --es: #8a3b47;
+  --line: #d9d9d9;
+  --card: #fafafa;
+  --page-bg: #e6e6e6;
+  --sheet-shadow: 0 1px 4px #0003;
+  --font: "Segoe UI", Calibri, Arial, sans-serif;
+  --font-title: Georgia, Cambria, "Times New Roman", serif;
+  --radius: 2px;
+  --head-line: 2px solid var(--ink);
+  --h1-color: var(--ink);
+  --tip-bg: #f0f0f0;
+  --tip-bar: var(--accent);
+  --code-bg: #f0f0f0;
+}
+/* plain accent-coloured number instead of the badge */
+:root[data-theme="modern"] .n {
+  background: none; color: var(--accent); border-radius: 0;
+  width: auto; height: auto; font: 700 1em var(--font-title);
+}
+:root[data-theme="modern"] .n::after { content: "."; }
+
+/* "mono": what the classic layout looks like printed in black and white.
+   Pure greys only (a grayscale filter also neutralises the emoji); Spanish
+   is set in italics because colour can no longer tell it apart. */
+:root[data-theme="mono"] {
+  --ink: #111;
+  --muted: #555;
+  --accent: #222;
+  --es: #555;
+  --line: #bbb;
+  --card: #f2f2f2;
+  --page-bg: #d9d9d9;
+  --tip-bg: #e8e8e8;
+  --tip-bar: #555;
+}
+:root[data-theme="mono"] .sheet { filter: grayscale(1); }
+:root[data-theme="mono"] h2 small,
+:root[data-theme="mono"] .es { font-style: italic; }
+
+/* theme switcher (injected by theme.js, hidden when printing) */
+.theme-switch {
+  position: fixed; top: 6px; right: 12px; z-index: 10;
+  display: flex; align-items: center; gap: 4px;
+  font: 12px var(--font); color: var(--muted);
+  background: var(--bg); border: 1px solid var(--line); border-radius: 999px; padding: 2px 8px;
+}
+.theme-switch select { font: inherit; color: var(--ink); background: transparent; border: 0; cursor: pointer; }
