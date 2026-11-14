@@ -163,7 +163,8 @@ nav.back a:hover { text-decoration: underline; }
 
 /* 5. Responsive ---------------------------------------------------------- */
 @media (max-width: 700px) {
-  .grid, .grid.cols-3, .cols, .abbr { grid-template-columns: 1fr; }
+  .grid, .grid.cols-3, .cols, .abbr, .two { grid-template-columns: 1fr; }
+  .c.wide td.en, .c.wide td.es { width: auto; }
   .wide { grid-column: auto; }
   section.wide ul { columns: 1; }
 }
